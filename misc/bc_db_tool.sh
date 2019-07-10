@@ -9,7 +9,7 @@
 # bc_db_tool.sh upgrade_db bc_db_name db_user db_pass [db_host]
 
 set -x # trace
-if [[ $(cat /etc/os-release | grep "^ID=" | grep centos) ]]
+if [[ $(cat /etc/os-release | grep "^ID=" | egrep "centos|fedora") ]]
 then
     IN_RPM="1"
 else

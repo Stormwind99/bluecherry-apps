@@ -1,23 +1,23 @@
-#!/bin/bash -e
+#!/usr/bin/bash -e
 
 # !!! ATTENTION !!!
 # This file is common for debian and centos (called at package postinstall stage)
 
 set -x # trace
 
-for x in /etc/*-release
-do
-	if [[ ! -d $x ]]
-	then
-		source $x
-	fi
-done
-
-if [[ $(cat /etc/os-release | grep "^ID=" | grep centos) ]]
+if [[ $(cat /etc/os-release | grep "^ID=" | egrep "centos|fedora") ]]
 then 
     IN_RPM="1"
 else
     IN_DEB="1"
+
+    for x in /etc/*-release
+    do
+    	if [[ ! -d $x ]]
+    	then
+    		source $x
+    	fi
+    done
 fi
 
 function restore_mysql_backup

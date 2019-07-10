@@ -10,7 +10,7 @@ then
     . /etc/os-release
 fi
 
-if [[ -e /etc/os-release ]] && [[ $ID == "centos" ]]
+if [[ -e /etc/os-release ]] && [[ $ID == "centos" || $ID == "fedora" ]]
 then
         DISTRO=${ID}_${VERSION_ID}
 else

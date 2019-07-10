@@ -1,35 +1,40 @@
 Name:           bluecherry
-Version:	%%UPSTREAM_VERSION%%
+Version:       %%UPSTREAM_VERSION%%
 Release:        1
 Epoch:		2
 Summary:        Bluecherry DVR Server
 Group:          Applications/Multimedia
-License:        Proprietary
+License:        GPLv2
 URL:            http://www.bluecherrydvr.com/
 Source:         %{name}-%{version}.tar.gz
 Prefix:         %{_prefix}
+#BuildRequires: epel-release
 BuildRequires:	git,make,rpm-build,gcc-c++,ccache,autoconf,automake,libtool,bison,flex
 BuildRequires:	texinfo,php-devel,yasm,cmake,libbsd-devel,chrpath
 BuildRequires:  mariadb-devel,opencv-devel,systemd-devel
 BuildRequires:  systemd
-Requires:	epel-release,dpkg,httpd,mod_ssl,php,php-mysqlnd,php-pdo,php-pear-Mail,php-pear-Mail-Mime,mkvtoolnix,dpkg
-Requires:	mariadb,mariadb-server,sysstat,opencv-core,epel-release,libbsd,policycoreutils-python
+BuildRequires:  libva-devel
+#Requires: epel-release
+Requires:	dpkg,httpd,mod_ssl,php,php-mysqlnd,php-pdo,php-pear-Mail,php-pear-Mail-Mime,mkvtoolnix,dpkg
+Requires:	mariadb,mariadb-server,sysstat,opencv-core,libbsd,policycoreutils-python
 Requires:	nmap,mkvtoolnix-gui
 Requires:	v4l-utils
+Requires: libva
 
 %description
 This package contains the server components for the Bluecherry DVR system.
 
 %prep
 %autosetup -n %{name} -c %{name}
+#git submodule foreach --recursive "git clean -dxf && git reset --hard"
+#git clean -dxf && git reset --hard
+#git submodule update
 echo "#define GIT_REVISION \"`git describe --dirty --always --long` `git describe --all`\"" > server/version.h
+
 
 %build
-git submodule foreach --recursive "git clean -dxf && git reset --hard"
-git clean -dxf && git reset --hard
-git submodule update
-echo "#define GIT_REVISION \"`git describe --dirty --always --long` `git describe --all`\"" > server/version.h
-
+#%{__make} clean
+#%{__make} %{?_smp_mflags}
 make clean
 make
 

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/usr/bin/bash -e
 
 REFERENCE_DUMPFILE=/usr/share/bluecherry/schema_mysql.sql
 
@@ -23,6 +23,8 @@ then
 	echo "Database matches reference schema"
 	exit 0
 else
-	echo "Database doesn't match reference schema"
-	exit 1
+	echo "WARNING: Database doesn't match reference schema"
+	exit 0
+#	echo "Database doesn't match reference schema"
+#	exit 1
 fi
